@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 import { computed, ref } from "vue";
 
 export const useUserStore = defineStore("userStore", () => {
-  const userData = ref("aleordoh@gmail.com");
+  const userData = ref(null);
 
   const mayusculas = computed(() => userData.value.toUpperCase()); //propiedad computada, no modifica  a useData
 
