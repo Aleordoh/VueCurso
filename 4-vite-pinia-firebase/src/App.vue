@@ -2,7 +2,7 @@
 
 <template>
   <div>
-    <h1>App</h1>
+    <h1>MAO - App</h1>
     <nav
       id="mainNav"
       class="navbar staticBar is-fixed-top is-info"
