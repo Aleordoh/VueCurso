@@ -3,6 +3,7 @@ import { ref } from "vue";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  signOut
 } from "firebase/auth";
 import { auth } from "../firebaseConfig.js";
 
@@ -37,9 +38,19 @@ export const useUserStore = defineStore("userStore", () => {
     }
   };
 
+  const logoutUser = async () => {
+    try {
+      await signOut(auth);
+      userData.value = null;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return {
     registerUser,
     loginUser,
+    logoutUser,
     userData,
   };
 });

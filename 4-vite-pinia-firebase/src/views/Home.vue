@@ -5,7 +5,8 @@ const userStore = useUserStore()
 
 <template>
   <div>
-    <h1>Hola: {{ userStore.userData.email }}</h1>
+    <h1 v-if="userStore.userData">Bienvenido: {{ userStore.userData.email }}</h1>
+    <h1 v-else>Aun no hay usuarios Logueados</h1>
 
   </div>
 </template>

@@ -1,4 +1,7 @@
-<script setup></script>
+<script setup>
+import { useUserStore } from "./store/userStore";
+const userStore = useUserStore();
+</script>
 
 <template>
   <div>
@@ -26,11 +29,18 @@
             <router-link class="navbar-item" to="/register">
               Register
             </router-link>
-            <div class="buttons are-small ">
-              <router-link class="button is-success is-rounded is-outlined has-text-white" to="/login">
+            <div class="buttons are-small">
+              <router-link
+                class="button is-success is-rounded is-outlined has-text-white"
+                to="/login"
+              >
                 <strong>Log In</strong>
               </router-link>
-              <router-link class="button is-danger is-rounded is-outlined has-text-white" to="/">
+              <router-link
+                to="/login"
+                class="button is-danger is-rounded is-outlined has-text-white"
+                @click="userStore.logoutUser"
+              >
                 <strong>Log Out</strong>
               </router-link>
             </div>
