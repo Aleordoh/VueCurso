@@ -2,14 +2,18 @@ import { defineStore } from "pinia";
 import { ref } from "vue";
 import {
   createUserWithEmailAndPassword,
+  onAuthStateChanged,
   signInWithEmailAndPassword,
-  signOut
+  signOut,
 } from "firebase/auth";
+
 import { auth } from "../firebaseConfig.js";
 
 export const useUserStore = defineStore("userStore", () => {
   let userData = ref({});
+  let loadingUser = ref(false);
   // Metodo para loguear al usuario
+
   const registerUser = async (email, password) => {
     try {
       const { user } = await createUserWithEmailAndPassword(
@@ -23,6 +27,8 @@ export const useUserStore = defineStore("userStore", () => {
       };
     } catch (error) {
       console.error(error);
+    } finally {
+      loadingUser.value = true;
     }
   };
 
@@ -35,6 +41,8 @@ export const useUserStore = defineStore("userStore", () => {
       };
     } catch (error) {
       console.error(error);
+    } finally {
+      loadingUser.value = true;
     }
   };
 
@@ -44,14 +52,42 @@ export const useUserStore = defineStore("userStore", () => {
       userData.value = null;
     } catch (error) {
       console.error(error);
+    } finally {
+      loadingUser.value = false;
     }
+  };
+
+  const currentUser = () => {
+    return new Promise((resolve, reject) => {
+      const unsubscribe = onAuthStateChanged(
+        auth,
+        (user) => {
+          if (user) {
+            userData.value = {
+              email: user.email,
+              uid: user.uid,
+            };
+          } else {
+            userData.value = null;
+          }
+          resolve(user);
+        },
+        (error) => {
+          reject(error);
+        }
+      );
+
+      return unsubscribe;
+    });
   };
 
   return {
     registerUser,
     loginUser,
     logoutUser,
+    currentUser,
     userData,
+    loadingUser,
   };
 });
 /* Store con la api de opciones */

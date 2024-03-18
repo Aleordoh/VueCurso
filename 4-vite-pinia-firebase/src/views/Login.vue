@@ -13,7 +13,9 @@ const handleSubmit = async () => {
   } else {
     try {
       await userStore.loginUser(email.value, password.value);
-      router.push("/"); /* router.push 'empuja' al usuario a la pagina establecida luefo del registro */
+      router.push(
+        "/"
+      ); /* router.push 'empuja' al usuario a la pagina establecida luefo del registro */
     } catch (error) {
       console.error(error);
     }
@@ -35,7 +37,7 @@ const handleSubmit = async () => {
         placeholder="Ingrese una contraseña"
         v-model.trim="password"
       />
-      <button type="submit">Ingresar</button>
+      <button type="submit" :disabled="userStore.loadingUser">Ingresar</button>
     </form>
   </div>
 </template>

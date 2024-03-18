@@ -13,7 +13,9 @@ const handleSubmit = async () => {
     return alert("El usuario y/o contraseña no púeden estar vacios lptm!");
   } else {
     await userStore.registerUser(email.value, password.value);
-    router.push("/login");/* router.push 'empuja' al usuario a la pagina establecida luego del registro en este caso lo llevamos al login */
+    router.push(
+      "/login"
+    ); /* router.push 'empuja' al usuario a la pagina establecida luego del registro en este caso lo llevamos al login */
   }
 };
 </script>
@@ -32,7 +34,9 @@ const handleSubmit = async () => {
         placeholder="Ingrese una contraseña"
         v-model.trim="password"
       />
-      <button type="submit">Crear usuario</button>
+      <button type="submit" :disabled="userStore.loadingUser">
+        Crear usuario
+      </button>
     </form>
   </div>
 </template>
