@@ -1,4 +1,5 @@
 <script setup>
+import LoadingSpinner from "./components/LoadingSpinner.vue";
 import { useUserStore } from "./store/userStore";
 const userStore = useUserStore();
 </script>
@@ -24,15 +25,22 @@ const userStore = useUserStore();
       </div>
       <div id="navbarMenu" class="navbar-menu">
         <div class="navbar-end">
-          <div class="navbar-item">
-            <router-link class="navbar-item" to="/"> Home </router-link>
-            <router-link class="navbar-item" to="/register">
+          <div v-if="!userStore.loadingSession" class="navbar-item">
+            <router-link class="navbar-item" to="/" v-if="userStore.userData">
+              Home
+            </router-link>
+            <router-link
+              class="navbar-item"
+              to="/register"
+              v-if="!userStore.userData"
+            >
               Register
             </router-link>
             <div class="buttons are-small">
               <router-link
                 class="button is-success is-rounded is-outlined has-text-white"
                 to="/login"
+                v-if="!userStore.userData"
               >
                 <strong>Log In</strong>
               </router-link>
@@ -40,11 +48,13 @@ const userStore = useUserStore();
                 to="/login"
                 class="button is-danger is-rounded is-outlined has-text-white"
                 @click="userStore.logoutUser"
+                v-if="userStore.userData"
               >
                 <strong>Log Out</strong>
               </router-link>
             </div>
           </div>
+          <LoadingSpinner v-else></LoadingSpinner>
         </div>
       </div>
     </nav>

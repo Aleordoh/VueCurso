@@ -6,12 +6,14 @@ import Login from "../views/Login.vue";
 
 const requiereAuth = async (to, from, next) => {
   const userStore = useUserStore();
+  userStore.loadingSession = true //indica que la session se esta cargando para mostrar el snnipper (en APP)
   const user = await userStore.currentUser();
   if (user) {
     next();
   } else {
     next("/login");
   }
+  userStore.loadingSession = false //fin de la carga oculta el snipper (en App)
 };
 
 const routes = [

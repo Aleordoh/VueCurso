@@ -10,8 +10,9 @@ import {
 import { auth } from "../firebaseConfig.js";
 
 export const useUserStore = defineStore("userStore", () => {
-  let userData = ref({});
+  let userData = ref(null);
   let loadingUser = ref(false);
+  let loadingSession = ref(false)
   // Metodo para loguear al usuario
 
   const registerUser = async (email, password) => {
@@ -88,6 +89,7 @@ export const useUserStore = defineStore("userStore", () => {
     currentUser,
     userData,
     loadingUser,
+    loadingSession,
   };
 });
 /* Store con la api de opciones */

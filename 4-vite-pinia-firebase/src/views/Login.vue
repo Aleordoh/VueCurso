@@ -25,7 +25,7 @@ const handleSubmit = async () => {
 
 <template>
   <div>
-    <h1>Login</h1>
+    <h1>Login {{ userStore.userData }}</h1>
     <form @submit.prevent="handleSubmit">
       <input
         type="email"
